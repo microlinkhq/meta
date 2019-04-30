@@ -77,14 +77,14 @@ function getCss(theme: string, fontSize: string) {
         margin: calc(var(--line-space) * var(--line-height-ratio)) 0;
         padding: 0;
     }
-    
+
     .heading {
         font-family: 'Lato', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
         line-height: 1.8;
-        color: var(--text-color); 
+        color: var(--text-color);
         text-transform: uppercase;
         word-spacing: 30px;
     }
