@@ -1,5 +1,5 @@
 {
-    "name": "og-image",	 
+    "name": "microlink-meta",	 
     "alias": [ "microlink-meta.now.sh" ],
     "version": 2,
     "regions": ["all"],
