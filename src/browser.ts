@@ -90,8 +90,8 @@ interface FieldProps {
 const Field = ({ label, input }: FieldProps) => {
     return H('div',
         { className: 'field' },
-        H('label', 
-            H('div', {className: 'field-label'}, label),
+        H('label',
+            H('div', { className: 'field-label' }, label),
             H('div', { className: 'field-value' }, input),
         ),
     );
@@ -103,7 +103,7 @@ interface ToastProps {
 }
 
 const Toast = ({ show, message }: ToastProps) => {
-    const style = { transform:  show ? 'translate3d(0,-0px,-0px) scale(1)' : '' };
+    const style = { transform: show ? 'translate3d(0,-0px,-0px) scale(1)' : '' };
     return H('div',
         { className: 'toast-area' },
         H('div',
@@ -111,7 +111,7 @@ const Toast = ({ show, message }: ToastProps) => {
             H('div',
                 { className: 'toast-inner' },
                 H('div',
-                    { className: 'toast-message'},
+                    { className: 'toast-message' },
                     message
                 )
             )
@@ -141,17 +141,11 @@ const markdownOptions: DropdownOption[] = [
 ];
 
 const imageLightOptions: DropdownOption[] = [
-    { text: 'Now', value: 'https://assets.zeit.co/image/upload/front/assets/design/now-black.svg' },
-    { text: 'ZEIT', value: 'https://assets.zeit.co/image/upload/front/assets/design/zeit-black-triangle.svg' },
-    { text: 'Next.js', value: 'https://assets.zeit.co/image/upload/front/assets/design/nextjs-black-logo.svg' },
-    { text: 'Hyper', value: 'https://assets.zeit.co/image/upload/front/assets/design/hyper-color-logo.svg' },
+    { text: 'Microlink', value: 'https://svgur.com/i/CkA.svg' }
 ];
 
 const imageDarkOptions: DropdownOption[] = [
-    { text: 'Now', value: 'https://assets.zeit.co/image/upload/front/assets/design/now-white.svg' },
-    { text: 'ZEIT', value: 'https://assets.zeit.co/image/upload/front/assets/design/zeit-white-triangle.svg' },
-    { text: 'Next.js', value: 'https://assets.zeit.co/image/upload/front/assets/design/nextjs-white-logo.svg' },
-    { text: 'Hyper', value: 'https://assets.zeit.co/image/upload/front/assets/design/hyper-bw-logo.svg' },
+    { text: 'Microlink', value: 'https://svgur.com/i/CkA.svg' }
 ];
 
 const widthOptions = [
@@ -205,10 +199,10 @@ const App = (_: any, state: AppState, setState: SetState) => {
         fontSize = '100px',
         theme = 'light',
         md = true,
-        text = '**Hello** World',
-        images=[imageLightOptions[0].value],
-        widths=[],
-        heights=[],
+        text = 'microlink api',
+        images = [imageLightOptions[0].value],
+        widths = [],
+        heights = [],
         showToast = false,
         messageToast = '',
         loading = true,
@@ -216,7 +210,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
         overrideUrl = null,
     } = state;
     const mdValue = md ? '1' : '0';
-    const imageOptions = theme === 'light' ? imageLightOptions : imageDarkOptions;
+    // const imageOptions = theme === 'light' ? imageLightOptions : imageDarkOptions;
     const url = new URL(window.location.origin);
     url.pathname = `${encodeURIComponent(text)}.${fileType}`;
     url.searchParams.append('theme', theme);
@@ -279,97 +273,96 @@ const App = (_: any, state: AppState, setState: SetState) => {
                     input: H(TextInput, {
                         value: text,
                         oninput: (val: string) => {
-                            console.log('oninput ' + val);
                             setLoadingState({ text: val, overrideUrl: url });
                         }
                     })
                 }),
-                H(Field, {
-                    label: 'Image 1',
-                    input: H('div',
-                        H(Dropdown, {
-                            options: imageOptions,
-                            value: imageOptions[selectedImageIndex].value,
-                            onchange: (val: string) =>  {
-                                let clone = [...images];
-                                clone[0] = val;
-                                const selected = imageOptions.map(o => o.value).indexOf(val);
-                                setLoadingState({ images: clone, selectedImageIndex: selected });
-                            }
-                        }),
-                        H('div',
-                            { className: 'field-flex' },
-                            H(Dropdown, {
-                                options: widthOptions,
-                                value: widths[0],
-                                small: true,
-                                onchange: (val: string) =>  {
-                                    let clone = [...widths];
-                                    clone[0] = val;
-                                    setLoadingState({ widths: clone });
-                                }
-                            }),
-                            H(Dropdown, {
-                                options: heightOptions,
-                                value: heights[0],
-                                small: true,
-                                onchange: (val: string) =>  {
-                                    let clone = [...heights];
-                                    clone[0] = val;
-                                    setLoadingState({ heights: clone });
-                                }
-                            })
-                        )
-                    ),
-                }),
-                ...images.slice(1).map((image, i) => H(Field, {
-                    label: `Image ${i + 2}`,
-                    input: H('div',
-                        H(TextInput, {
-                            value: image,
-                            oninput: (val: string) => {
-                                let clone = [...images];
-                                clone[i + 1] = val;
-                                setLoadingState({ images: clone, overrideUrl: url });
-                            }
-                        }),
-                        H('div',
-                            { className: 'field-flex' },
-                            H(Dropdown, {
-                                options: widthOptions,
-                                value: widths[i + 1],
-                                small: true,
-                                onchange: (val: string) =>  {
-                                    let clone = [...widths];
-                                    clone[i + 1] = val;
-                                    setLoadingState({ widths: clone });
-                                }
-                            }),
-                            H(Dropdown, {
-                                options: heightOptions,
-                                value: heights[i + 1],
-                                small: true,
-                                onchange: (val: string) =>  {
-                                    let clone = [...heights];
-                                    clone[i + 1] = val;
-                                    setLoadingState({ heights: clone });
-                                }
-                            })
-                        )
-                    )
-                })),
-                H(Field, {
-                    label: `Image ${images.length + 1}`,
-                    input: H(Button, {
-                        label: `Add Image ${images.length + 1}`,
-                        onclick: () => {
-                            const nextImage = images.length === 1
-                                ? 'https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg'
-                                : '';
-                            setLoadingState({ images: [...images, nextImage] })
-                        }
-                    }),
-                }),
+                // H(Field, {
+                //     label: 'Logo size',
+                //     input: H('div',
+                //         // H(Dropdown, {
+                //         //     options: imageOptions,
+                //         //     value: imageOptions[selectedImageIndex].value,
+                //         //     onchange: (val: string) => {
+                //         //         let clone = [...images];
+                //         //         clone[0] = val;
+                //         //         const selected = imageOptions.map(o => o.value).indexOf(val);
+                //         //         setLoadingState({ images: clone, selectedImageIndex: selected });
+                //         //     }
+                //         // }),
+                //         H('div',
+                //             { className: 'field-flex' },
+                //             H(Dropdown, {
+                //                 options: widthOptions,
+                //                 value: widths[0],
+                //                 small: true,
+                //                 onchange: (val: string) => {
+                //                     let clone = [...widths];
+                //                     clone[0] = val;
+                //                     setLoadingState({ widths: clone });
+                //                 }
+                //             }),
+                //             H(Dropdown, {
+                //                 options: heightOptions,
+                //                 value: heights[0],
+                //                 small: true,
+                //                 onchange: (val: string) => {
+                //                     let clone = [...heights];
+                //                     clone[0] = val;
+                //                     setLoadingState({ heights: clone });
+                //                 }
+                //             })
+                //         )
+                //     ),
+                // }),
+                // ...images.slice(1).map((image, i) => H(Field, {
+                //     label: `Image ${i + 2}`,
+                //     input: H('div',
+                //         H(TextInput, {
+                //             value: image,
+                //             oninput: (val: string) => {
+                //                 let clone = [...images];
+                //                 clone[i + 1] = val;
+                //                 setLoadingState({ images: clone, overrideUrl: url });
+                //             }
+                //         }),
+                //         H('div',
+                //             { className: 'field-flex' },
+                //             H(Dropdown, {
+                //                 options: widthOptions,
+                //                 value: widths[i + 1],
+                //                 small: true,
+                //                 onchange: (val: string) => {
+                //                     let clone = [...widths];
+                //                     clone[i + 1] = val;
+                //                     setLoadingState({ widths: clone });
+                //                 }
+                //             }),
+                //             H(Dropdown, {
+                //                 options: heightOptions,
+                //                 value: heights[i + 1],
+                //                 small: true,
+                //                 onchange: (val: string) => {
+                //                     let clone = [...heights];
+                //                     clone[i + 1] = val;
+                //                     setLoadingState({ heights: clone });
+                //                 }
+                //             })
+                //         )
+                //     )
+                // })),
+                // H(Field, {
+                //     label: `Image ${images.length + 1}`,
+                //     input: H(Button, {
+                //         label: `Add Image ${images.length + 1}`,
+                //         onclick: () => {
+                //             const nextImage = images.length === 1
+                //                 ? 'https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg'
+                //                 : '';
+                //             setLoadingState({ images: [...images, nextImage] })
+                //         }
+                //     }),
+                // }),
             )
         ),
         H('div',

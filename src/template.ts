@@ -1,50 +1,31 @@
-
-import { readFileSync } from 'fs';
 import marked from 'marked';
 import { sanitizeHtml } from './sanitizer';
 const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const regular = readFileSync(`${__dirname}/../.fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../.fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../.fonts/Vera-Mono.woff2`).toString('base64');
-
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
     let foreground = 'black';
-    let radial = 'lightgray';
 
     if (theme === 'dark') {
         background = 'black';
         foreground = 'white';
-        radial = 'dimgray';
     }
     return `
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${regular}) format('woff2');
-    }
+    @import url('https://fonts.googleapis.com/css?family=Lato');
+    @import url('https://rsms.me/inter/inter.css');
 
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: bold;
-        src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
+    :root {
+        --zoom: 80%;
+        --line-space: 100px;
+        --line-color: #e1e8ef;
+        --line-height-ratio: 1;
+        --text-color: #313b53;
       }
 
     body {
         background: ${background};
-        background-image: radial-gradient(${radial} 5%, transparent 0);
         background-size: 60px 60px;
         height: 100vh;
         display: flex;
@@ -55,9 +36,14 @@ function getCss(theme: string, fontSize: string) {
 
     code {
         color: #D400FF;
-        font-family: 'Vera';
+        font-family: monospace;
         white-space: pre-wrap;
         letter-spacing: -5px;
+    }
+
+    main {
+        display: flex;
+        zoom: var(--zoom);
     }
 
     code:before, code:after {
@@ -70,20 +56,12 @@ function getCss(theme: string, fontSize: string) {
         align-content: center;
         justify-content: center;
         justify-items: center;
+        padding-right: var(--line-space);
     }
 
-    .logo {
-        margin: 0 75px;
-    }
-
-    .plus {
-        color: #BBB;
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
-    }
-
-    .spacer {
-        margin: 150px;
+    .heading-wrapper {
+        display: flex;
+        padding-left: var(--line-space);
     }
 
     .emoji {
@@ -92,14 +70,25 @@ function getCss(theme: string, fontSize: string) {
         margin: 0 .05em 0 .1em;
         vertical-align: -0.1em;
     }
+
+    .line {
+        background: var(--line-color);
+        width: 8px;
+        margin: calc(var(--line-space) * var(--line-height-ratio)) 0;
+        padding: 0;
+    }
     
     .heading {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
         line-height: 1.8;
-    }`;
+        color: var(--text-color); 
+        text-transform: uppercase;
+        word-spacing: 30px;
+    }
+    `;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
@@ -113,24 +102,19 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss(theme, fontSize)}
     </style>
     <body>
-        <div>
-            <div class="spacer">
-            <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
-            </div>
-            <div class="spacer">
-            <div class="heading">${emojify(
-                md ? marked(text) : sanitizeHtml(text)
-            )}
-            </div>
+        <main>
+        <div class="logo-wrapper">
+            ${images.map((img, i) => getPlusSign(i) + getImage(img, widths[i], heights[i])).join('')}
+        </div>
+        <div class="line"></div>
+        <div class="heading-wrapper">
+        <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}
         </div>
     </body>
 </html>`;
 }
 
-function getImage(src: string, width ='auto', height = '225') {
+function getImage(src: string, width = 'auto', height = '225') {
     return `<img
         class="logo"
         alt="Generated Image"
