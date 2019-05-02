@@ -4,20 +4,21 @@ const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-function getCss(theme: string, fontSize: string) {
-    let background = 'white';
-    let foreground = 'black';
+function getCss(theme: string, fontSize: string, fileType: string) {
+  let background = fileType === 'png' ? 'transparent' : 'white';
+  let foreground = 'black';
 
-    if (theme === 'dark') {
-        background = 'black';
-        foreground = 'white';
-    }
-    return `
+  if (theme === 'dark') {
+    background = 'black';
+    foreground = 'white';
+  }
+
+  return `
     @import url('https://fonts.googleapis.com/css?family=Lato');
     @import url('https://rsms.me/inter/inter.css');
 
     :root {
-        --zoom: 80%;
+        --zoom: 65%;
         --line-space: 100px;
         --line-color: #e1e8ef;
         --line-height-ratio: 1;
@@ -92,14 +93,14 @@ function getCss(theme: string, fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
-    return `<!DOCTYPE html>
+  const { fileType, text, theme, md, fontSize, images, widths, heights } = parsedReq;
+  return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        ${getCss(theme, fontSize)}
+        ${getCss(theme, fontSize, fileType)}
     </style>
     <body>
         <main>
@@ -115,7 +116,7 @@ export function getHtml(parsedReq: ParsedRequest) {
 }
 
 function getImage(src: string, width = 'auto', height = '225') {
-    return `<img
+  return `<img
         class="logo"
         alt="Generated Image"
         src="${sanitizeHtml(src)}"
@@ -125,5 +126,5 @@ function getImage(src: string, width = 'auto', height = '225') {
 }
 
 function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
+  return i === 0 ? '' : '<div class="plus">+</div>';
 }
