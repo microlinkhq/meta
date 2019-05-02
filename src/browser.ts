@@ -199,7 +199,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
     fontSize = '100px',
     theme = 'light',
     md = true,
-    text = 'Microlink API',
+    text = 'microlink',
     images = [imageLightOptions[0].value],
     widths = [],
     heights = [],
