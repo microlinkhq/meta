@@ -216,6 +216,7 @@ const App = (_: any, state: AppState, setState: SetState) => {
   url.searchParams.append('theme', theme);
   url.searchParams.append('md', mdValue);
   url.searchParams.append('fontSize', fontSize);
+
   for (let image of images) {
     url.searchParams.append('images', image);
   }
@@ -278,91 +279,91 @@ const App = (_: any, state: AppState, setState: SetState) => {
           })
         }),
         // H(Field, {
-        //     label: 'Logo size',
-        //     input: H('div',
-        //         // H(Dropdown, {
-        //         //     options: imageOptions,
-        //         //     value: imageOptions[selectedImageIndex].value,
-        //         //     onchange: (val: string) => {
-        //         //         let clone = [...images];
-        //         //         clone[0] = val;
-        //         //         const selected = imageOptions.map(o => o.value).indexOf(val);
-        //         //         setLoadingState({ images: clone, selectedImageIndex: selected });
-        //         //     }
-        //         // }),
-        //         H('div',
-        //             { className: 'field-flex' },
-        //             H(Dropdown, {
-        //                 options: widthOptions,
-        //                 value: widths[0],
-        //                 small: true,
-        //                 onchange: (val: string) => {
-        //                     let clone = [...widths];
-        //                     clone[0] = val;
-        //                     setLoadingState({ widths: clone });
-        //                 }
-        //             }),
-        //             H(Dropdown, {
-        //                 options: heightOptions,
-        //                 value: heights[0],
-        //                 small: true,
-        //                 onchange: (val: string) => {
-        //                     let clone = [...heights];
-        //                     clone[0] = val;
-        //                     setLoadingState({ heights: clone });
-        //                 }
-        //             })
-        //         )
-        //     ),
-        // }),
-        // ...images.slice(1).map((image, i) => H(Field, {
-        //     label: `Image ${i + 2}`,
-        //     input: H('div',
-        //         H(TextInput, {
-        //             value: image,
-        //             oninput: (val: string) => {
-        //                 let clone = [...images];
-        //                 clone[i + 1] = val;
-        //                 setLoadingState({ images: clone, overrideUrl: url });
-        //             }
-        //         }),
-        //         H('div',
-        //             { className: 'field-flex' },
-        //             H(Dropdown, {
-        //                 options: widthOptions,
-        //                 value: widths[i + 1],
-        //                 small: true,
-        //                 onchange: (val: string) => {
-        //                     let clone = [...widths];
-        //                     clone[i + 1] = val;
-        //                     setLoadingState({ widths: clone });
-        //                 }
-        //             }),
-        //             H(Dropdown, {
-        //                 options: heightOptions,
-        //                 value: heights[i + 1],
-        //                 small: true,
-        //                 onchange: (val: string) => {
-        //                     let clone = [...heights];
-        //                     clone[i + 1] = val;
-        //                     setLoadingState({ heights: clone });
-        //                 }
-        //             })
-        //         )
-        //     )
-        // })),
-        // H(Field, {
-        //     label: `Image ${images.length + 1}`,
-        //     input: H(Button, {
-        //         label: `Add Image ${images.length + 1}`,
-        //         onclick: () => {
-        //             const nextImage = images.length === 1
-        //                 ? 'https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg'
-        //                 : '';
-        //             setLoadingState({ images: [...images, nextImage] })
-        //         }
+        //   label: 'Image 1',
+        //   input: H('div',
+        //     H(Dropdown, {
+        //       options: imageOptions,
+        //       value: imageOptions[selectedImageIndex].value,
+        //       onchange: (val: string) => {
+        //         let clone = [...images];
+        //         clone[0] = val;
+        //         const selected = imageOptions.map(o => o.value).indexOf(val);
+        //         setLoadingState({ images: clone, selectedImageIndex: selected });
+        //       }
         //     }),
+        //     H('div',
+        //       { className: 'field-flex' },
+        //       H(Dropdown, {
+        //         options: widthOptions,
+        //         value: widths[0],
+        //         small: true,
+        //         onchange: (val: string) => {
+        //           let clone = [...widths];
+        //           clone[0] = val;
+        //           setLoadingState({ widths: clone });
+        //         }
+        //       }),
+        //       H(Dropdown, {
+        //         options: heightOptions,
+        //         value: heights[0],
+        //         small: true,
+        //         onchange: (val: string) => {
+        //           let clone = [...heights];
+        //           clone[0] = val;
+        //           setLoadingState({ heights: clone });
+        //         }
+        //       })
+        //     )
+        //   ),
         // }),
+        ...images.slice(1).map((image, i) => H(Field, {
+          label: `Image ${i + 1}`,
+          input: H('div',
+            H(TextInput, {
+              value: image,
+              oninput: (val: string) => {
+                let clone = [...images];
+                clone[i + 1] = val;
+                setLoadingState({ images: clone, overrideUrl: url });
+              }
+            }),
+            // H('div',
+            //   { className: 'field-flex' },
+            //   H(Dropdown, {
+            //     options: widthOptions,
+            //     value: widths[i + 1],
+            //     small: true,
+            //     onchange: (val: string) => {
+            //       let clone = [...widths];
+            //       clone[i + 1] = val;
+            //       setLoadingState({ widths: clone });
+            //     }
+            //   }),
+            //   H(Dropdown, {
+            //     options: heightOptions,
+            //     value: heights[i + 1],
+            //     small: true,
+            //     onchange: (val: string) => {
+            //       let clone = [...heights];
+            //       clone[i + 1] = val;
+            //       setLoadingState({ heights: clone });
+            //     }
+            //   })
+            // )
+          )
+        })),
+        H(Field, {
+          label: `Add Image`,
+          input: H(Button, {
+            label: `Add Image`,
+            onclick: () => {
+              const nextImage = images.length === 1
+                ? 'https://abs.twimg.com/icons/apple-touch-icon-192x192.png'
+                : '';
+              setLoadingState({ images: [...images, nextImage] })
+            }
+          }),
+        }),
       )
     ),
     H('div',
