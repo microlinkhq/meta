@@ -21,11 +21,10 @@ function getCss(theme: string, fontSize: string, fileType: string) {
     :root {
       --zoom: 65%;
       --line-space: 100px;
-      --line-color: #e1e8ef;
+      --line-color: #aab4bd;
       --line-height-ratio: 1;
       --text-color: #313b53;
     }
-
     body {
       background: ${background};
       background-size: 60px 60px;
