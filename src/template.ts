@@ -141,7 +141,7 @@ function withMultipleLogo(parsedReq: ParsedRequest) {
           padding-right: 0;
         }
         p {
-          margin: 0;
+          margin: 50px;
         }
       </style>
       <body>
