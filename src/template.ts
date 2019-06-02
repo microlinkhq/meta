@@ -141,7 +141,7 @@ function withMultipleLogo(parsedReq: ParsedRequest) {
           padding-right: 0;
         }
         p {
-          margin: 50px;
+          margin: 64px;
         }
       </style>
       <body>
@@ -149,7 +149,6 @@ function withMultipleLogo(parsedReq: ParsedRequest) {
         <div class="logo-wrapper">
           ${images.map((img, i) => getPlusSign(i) + getImage(img, widths[i], i == 0 ? heights[i] : '319.35')).join('')}
         </div>
-        <br>
         <div class="heading">${emojify(md ? marked(text) : sanitizeHtml(text))}</div>
       </body>
     </html>`;
