@@ -1,8 +1,7 @@
 {
   "name": "microlink-meta",
   "alias": [
-    "meta.microlink.io",
-    "microlink-meta.now.sh"
+    "meta.microlink.io"
   ],
   "version": 2,
   "regions": [
