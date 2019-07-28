@@ -19,10 +19,7 @@
     },
     {
       "src": "src/card.ts",
-      "use": "@now/node",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+      "use": "@now/node"
     }
   ],
   "routes": [
