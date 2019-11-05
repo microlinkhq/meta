@@ -20,7 +20,7 @@
     "node": ">= 10"
   },
   "devDependencies": {
-    "@types/marked": "0.6.5",
+    "@types/marked": "0.7.0",
     "@types/puppeteer-core": "1.9.0",
     "typescript": "3.6.4"
   }
