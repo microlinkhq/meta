@@ -16,6 +16,6 @@ export async function getScreenshot(url: string, type: FileType, isDev: boolean)
   const page = await getPage(isDev);
   await page.setViewport({ width: 2048, height: 1170 });
   await page.goto(url);
-  const file = await page.screenshot({ type, omitBackground: true });
+  const file = await page.screenshot({ type });
   return file;
 }
