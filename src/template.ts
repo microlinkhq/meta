@@ -21,7 +21,7 @@ function getCss(theme: string, fontSize: string, fileType: string) {
     :root {
       --zoom: 65%;
       --line-space: 100px;
-      --line-color: #aab4bd;
+      --line-color: #000;
       --line-height-ratio: 1;
       --text-color: #313b53;
     }
