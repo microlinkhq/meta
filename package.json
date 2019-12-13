@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "chrome-aws-lambda": "2.0.1",
-    "marked": "0.7.0",
+    "marked": "0.8.0",
     "puppeteer-core": "2.0.0",
     "twemoji": "12.1.4"
   },
