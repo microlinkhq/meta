@@ -14,7 +14,7 @@
     "chrome-aws-lambda": "2.0.2",
     "marked": "0.8.0",
     "puppeteer-core": "2.0.0",
-    "twemoji": "12.1.4"
+    "twemoji": "12.1.5"
   },
   "engines": {
     "node": ">= 10"
